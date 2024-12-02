@@ -4,7 +4,7 @@ import ping
 
 def main():
     start = input("Enter the starting IP in CIDR notation: ")
-    ip = subnet.get_subnet(start)
+    ip = subnet.cidr(start)
     ip = ping.ping(ip)
     print(ip)
 
