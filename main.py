@@ -1,16 +1,14 @@
 import ipGenerator
-
-# Used to convert the CIDR notation into a subnet mask.
-
-
-
+import subnet
+import ping
+import subprocess
 
 
 def main():
     start = int(input("Enter the starting IP: "))
     cidr = int(input("Enter the CIDR: "))
-    ip = ipGenerator.ipGen(start, cidr)
-    print(ip)
+    ip = subnet.get_subnet(start, cidr)
+    ping.ping(ip)
 
 
 if __name__ == '__main__':
