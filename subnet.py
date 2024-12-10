@@ -1,5 +1,4 @@
 import ipGenerator
-import itertools
 
 
 # Used to convert the CIDR notation into a subnet mask.
