@@ -1,7 +1,9 @@
 import ipGenerator
+from decorators import logger
 
 
 # Used to convert the CIDR notation into a subnet mask.
+@logger
 def cidr(ipAddr):
     ip, cidr = ipAddr.split("/")
     cidr = int(cidr)
@@ -109,28 +111,20 @@ def cidr(ipAddr):
             oct4 = ipGenerator.ipGen(oct4, 256)
         case 24:
             oct4 = ipGenerator.ipGen(oct4, 256)
-            print(oct4)
         case 25:
             oct4 = ipGenerator.ipGen(oct4, 128)
-            print(oct4)
         case 26:
             oct4 = ipGenerator.ipGen(oct4, 64)
-            print(oct4)
         case 27:
             oct4 = ipGenerator.ipGen(oct4, 32)
-            print(oct4)
         case 28:
             oct4 = ipGenerator.ipGen(oct4, 16)
-            print(oct4)
         case 29:
             oct4 = ipGenerator.ipGen(oct4, 8)
-            print(oct4)
         case 30:
             oct4 = ipGenerator.ipGen(oct4, 4)
-            print(oct4)
         case 31:
             oct4 = ipGenerator.ipGen(oct4, 2)
-            print(oct4)
         case 32:
             print("There's only one IP address in this subnet...stoopid.")
 
