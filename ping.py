@@ -2,51 +2,26 @@ import os
 import time
 
 
-'''def ping(hosts):
-    param = '-n' if os.sys.platform.lower() == 'win32' else '-c'
-    successful_hosts = []
-    
-    for host in hosts:
-        response = os.system(f"ping {param} 1 {host}")
-        
-        if response == 0:
-            successful_hosts.append(host)
-        else:
-            continue
-    
-    return successful_hosts'''
-
-
-'''def ping(ip):
-    # Simulate pinging an IP address
-    time.sleep(0.1)  # Simulate some processing time
-    return f"Ping result for {ip}"
-
-def scan_ips(ip_list):
-    total_ips = len(ip_list)
-
-    for i, ip in enumerate(ip_list, start=1):
-        result = ping(ip)
-        print(f"\r{i}/{total_ips} IPs scanned", end="")
-    
-    # Print a newline at the end to move to the next line
-    print()'''
-
-
 def ping(ip):
     param = '-n' if os.sys.platform.lower() == 'win32' else '-c'
     successful_hosts = []
+    null_device = 'NUL' if os.sys.platform.lower() == 'win32' else '/dev/null'
     total_ips = len(ip)
     start_time = time.time()  # Start time of the scan
+    last_update = start_time
 
     for i, ip in enumerate(ip, start=1):
-        elapsed_time = time.time() - start_time  # Calculate elapsed time
-        print(f"\r{elapsed_time:.2f}:{i}/{total_ips} IPs scanned", end="")
-        response = os.system(f"ping {param} 1 {ip}")
+        response = os.system(f"ping {param} 1 {ip} > {null_device} 2>&1")
 
         if response == 0:
             successful_hosts.append(ip)
-        else:
-            continue
+
+        # Updates the how much time has passed and how many IPs have been pinged every second
+        current_time = time.time()
+        if current_time - last_update >= 1:
+            elapsed_time = time.time() - start_time  # Calculate elapsed time
+            formatted_time = time.strftime("%H:%M:%S", time.gmtime(elapsed_time)) # Format elapsed time
+            print(f"\r{formatted_time}; {i}/{total_ips} IPs scanned", end="")
+            last_update = current_time
     
     return successful_hosts
