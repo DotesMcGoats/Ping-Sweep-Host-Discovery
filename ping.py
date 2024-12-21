@@ -1,5 +1,6 @@
 import os
 from decorators import timer, logger
+import socket
 
 
 def update_progress(formatted_time, i, total_ips):
@@ -17,7 +18,11 @@ def ping(state, ip):
         response = os.system(f"ping {param} 1 {ip} > {null_device} 2>&1")
 
         if response == 0:
-            successful_hosts.append(ip)
+            try:
+                hostname = socket.gethostbyaddr(ip)[0]
+            except socket.herror:
+                hostname = None
+            successful_hosts.append((ip, hostname))
         
         # Update the progress after each ping
         state['i'] = i
